@@ -1,30 +1,33 @@
 package com.example.userorderapi.entity;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
-
-import java.math.BigDecimal;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
-@Data
+@Getter
+@Table(name = "orders")
+@Setter
+@ToString
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Product name is required")
     private String product;
 
-    @JsonView(User.Views.UserDetails.class)
-    private BigDecimal total;
+    private Double amount;
 
-    @JsonView(User.Views.UserDetails.class)
-    @NotBlank(message = "Status is required")
     private String status;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(nullable = false)
     private User user;
 }

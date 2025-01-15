@@ -1,39 +1,36 @@
 package com.example.userorderapi.entity;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Table(name = "users")
+@Setter
+@ToString
 public class User {
-
-    public interface Views {
-        interface UserSummary {}
-        interface UserDetails extends UserSummary {}
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonView(Views.UserSummary.class)
-    @NotBlank(message = "Name is required")
     @Size(max = 100, message = "Name must not exceed 100 characters")
     private String name;
 
-    @JsonView(Views.UserSummary.class)
-    @Email(message = "Email should be valid")
-    @NotBlank(message = "Email is required")
     private String email;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonView(Views.UserDetails.class)
+    @ToString.Exclude
     private List<Order> orders;
-
 }
