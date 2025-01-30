@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Data
@@ -40,7 +41,7 @@ public class EntityDTO {
 
     @JsonView(Views.OrderDetails.class)
     @NotNull(message = "Amount is required for orders")
-    private Double amount;
+    private BigDecimal amount;
 
     @JsonView(Views.OrderDetails.class)
     @NotBlank(message = "Status is required for orders")

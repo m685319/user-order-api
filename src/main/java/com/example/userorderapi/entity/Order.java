@@ -11,6 +11,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.math.BigDecimal;
+
 @Entity
 @Getter
 @Table(name = "orders")
@@ -23,7 +25,7 @@ public class Order {
 
     private String product;
 
-    private Double amount;
+    private BigDecimal amount;
 
     private String status;
 
